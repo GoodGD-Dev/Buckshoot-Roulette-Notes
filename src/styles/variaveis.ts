@@ -3,5 +3,6 @@ export default {
   verde: '#00FF00',
   true: '#FF0000',
   fechim: '#3D99F5',
-  borderColor: '#FFF'
+  primary: '#00FF00',
+  secundary: '#000'
 }
