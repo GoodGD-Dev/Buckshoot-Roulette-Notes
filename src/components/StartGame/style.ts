@@ -30,7 +30,7 @@ export const LabelBase = styled.label<StartProps>`
 export const InputBase = styled.input.attrs(() => ({
   type: 'number',
   min: 0,
-  max: 9,
+  max: 6,
   step: 1
 }))<StartProps>`
   border: solid 1px

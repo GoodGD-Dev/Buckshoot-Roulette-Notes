@@ -8,15 +8,23 @@ type RatioProps = {
 
 export const Lista = styled.ul`
   display: grid;
-  grid-template-columns: 15fr repeat(4, 1fr);
+  grid-template-columns: 1fr;
   margin-top: 3rem;
   padding: 2rem;
   color: ${variaveis.primary};
   text-transform: uppercase;
   border-top: dotted 1px ${variaveis.primary};
 `
+
+export const ListaItens = styled(Lista)`
+  margin-top: 0px;
+  padding: 0.28rem;
+  border-bottom: dotted 1px ${variaveis.primary};
+`
 export const Itens = styled.li`
   margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 15fr repeat(4, 1fr);
 `
 
 export const Span = styled.span<RatioProps>`
