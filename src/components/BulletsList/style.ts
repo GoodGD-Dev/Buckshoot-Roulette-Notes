@@ -3,7 +3,7 @@ import variaveis from '../../styles/variaveis'
 import { BALAS } from '../../utils/enums/index'
 
 type RatioProps = {
-  value?: BALAS.FECHIM | BALAS.TRUE
+  color?: BALAS.FECHIM | BALAS.TRUE
 }
 
 export const Lista = styled.ul`
@@ -28,8 +28,8 @@ export const Itens = styled.li`
 `
 
 export const Span = styled.span<RatioProps>`
-  color: ${({ value }) =>
-    value === BALAS.FECHIM ? variaveis.fechim : variaveis.true};
+  color: ${({ color }) =>
+    color === BALAS.FECHIM ? variaveis.fechim : variaveis.true};
 `
 
 export const Check = styled.input.attrs(() => ({
@@ -44,7 +44,7 @@ export const Check = styled.input.attrs(() => ({
   margin-left: 0.3rem;
 
   &:checked {
-    background-color: ${({ value }) =>
-      value === BALAS.FECHIM ? variaveis.fechim : variaveis.true};
+    background-color: ${({ color }) =>
+      color === BALAS.FECHIM ? variaveis.fechim : variaveis.true};
   }
 `
