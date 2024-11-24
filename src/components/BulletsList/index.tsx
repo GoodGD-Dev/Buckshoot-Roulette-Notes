@@ -1,10 +1,12 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store'
 import { BALAS } from '../../utils/enums/index'
 import * as S from './style'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const BulletList = () => {
+  const dispatch = useDispatch()
+
   // Seleciona os itens diretamente do estado do Redux
   const itens = useSelector((state: RootState) => state.generateItems.itens)
   const valorInput1 = useSelector(
@@ -14,21 +16,35 @@ const BulletList = () => {
     (state: RootState) => state.calcInputs.valorInput2
   )
 
+  // Inicializa os estados locais com os valores do Redux
+  const [newInput1, setNewInput1] = useState(valorInput1)
+  const [newInput2, setNewInput2] = useState(valorInput2)
+
+  // Sincroniza os valores com o estado do Redux
+  useEffect(() => {
+    setNewInput1(valorInput1)
+    setNewInput2(valorInput2)
+  }, [valorInput1, valorInput2])
+
   const bulletTotais = itens.length
-  const chanceReal = Math.round((valorInput1 / bulletTotais) * 100)
-  const chanceFalsa = Math.round((valorInput2 / bulletTotais) * 100)
+  const chanceReal = Math.round((newInput1 / bulletTotais) * 100)
+  const chanceFalsa = Math.round((newInput2 / bulletTotais) * 100)
 
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [newBullets, setNewBullets] = useState(bulletTotais)
 
-  // Função para manipular a mudança de seleção
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value)
-  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
 
-  // Função para resetar a seleção dos radio buttons
-  const handleReset = () => {
-    setSelectedOption(null)
-    console.log(selectedOption)
+    // Atualiza os valores com base no tipo de bala
+    if (value === 'Fechim') {
+      setNewInput1((prev) => prev - 1)
+      dispatch({ type: 'UPDATE_VALOR_INPUT1', payload: newInput1 - 1 })
+      setNewBullets((prev) => prev - 1)
+    } else if (value === 'Real') {
+      setNewInput2((prev) => prev - 1)
+      dispatch({ type: 'UPDATE_VALOR_INPUT2', payload: newInput2 - 1 })
+      setNewBullets((prev) => prev - 1)
+    }
   }
 
   return (
@@ -40,26 +56,23 @@ const BulletList = () => {
             <S.Span color={item.valorVerdadeiro}>{BALAS.TRUE}</S.Span>
             <S.Check
               name={`bala${item.id}`}
-              value={item.valorVerdadeiro + item.id}
+              value={item.valorVerdadeiro}
               color={BALAS.TRUE}
-              checked={selectedOption === item.valorVerdadeiro + item.id}
-              onChange={handleRadioChange}
+              onChange={handleChange}
             />
             <S.Span color={item.valorFalso}>{BALAS.FECHIM}</S.Span>
             <S.Check
               name={`bala${item.id}`}
               color={BALAS.FECHIM}
-              value={item.valorFalso + item.id}
-              checked={selectedOption === item.valorFalso + item.id}
-              onChange={handleRadioChange}
+              value={item.valorFalso}
+              onChange={handleChange}
             />
           </S.Itens>
           <p>
-            Selecionado: {valorInput1}, {valorInput2}
+            Selecionado: {newInput1}, {newInput2}
           </p>
         </S.ListaItens>
       ))}
-      <button onClick={handleReset}>Resetar Seleção</button>
     </S.Lista>
   )
 }

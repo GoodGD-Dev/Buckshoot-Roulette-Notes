@@ -42,6 +42,7 @@ export const Check = styled.input.attrs(() => ({
   width: 20px;
   height: 20px;
   margin-left: 0.3rem;
+  cursor: pointer;
 
   &:checked {
     background-color: ${({ color }) =>
