@@ -1,4 +1,6 @@
 export enum BALAS {
   FECHIM = 'Fechim',
-  TRUE = 'Real'
+  TRUE = 'Real',
+  SEM = 'Sem',
+  COM = 'Com'
 }

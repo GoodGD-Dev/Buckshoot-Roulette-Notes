@@ -19,6 +19,8 @@ const BulletList = () => {
   // Inicializa os estados locais com os valores do Redux
   const [newInput1, setNewInput1] = useState(valorInput1)
   const [newInput2, setNewInput2] = useState(valorInput2)
+  const [bulletTotais, setBulletsTotais] = useState(0)
+  const [showColor, setShowColor] = useState(true)
 
   // Sincroniza os valores com o estado do Redux
   useEffect(() => {
@@ -26,9 +28,12 @@ const BulletList = () => {
     setNewInput2(valorInput2)
   }, [valorInput1, valorInput2])
 
-  const bulletTotais = itens.length
-  const chanceReal = Math.round((newInput1 / bulletTotais) * 100)
-  const chanceFalsa = Math.round((newInput2 / bulletTotais) * 100)
+  useEffect(() => {
+    setBulletsTotais(newInput1 + newInput2)
+  }, [newInput1, newInput2])
+
+  const chanceReal = Math.round((newInput2 / bulletTotais) * 100)
+  const chanceFalsa = Math.round((newInput1 / bulletTotais) * 100)
 
   const [newBullets, setNewBullets] = useState(bulletTotais)
 
@@ -39,7 +44,7 @@ const BulletList = () => {
     if (value === 'Fechim') {
       setNewInput1((prev) => prev - 1)
       dispatch({ type: 'UPDATE_VALOR_INPUT1', payload: newInput1 - 1 })
-      setNewBullets((prev) => prev - 1)
+      setBulletsTotais((prev) => prev - 1)
     } else if (value === 'Real') {
       setNewInput2((prev) => prev - 1)
       dispatch({ type: 'UPDATE_VALOR_INPUT2', payload: newInput2 - 1 })
@@ -51,7 +56,7 @@ const BulletList = () => {
     <S.Lista>
       {itens.map((item) => (
         <S.ListaItens key={item.id}>
-          <S.Itens>
+          <S.Itens color={BALAS.COM}>
             {item.nome} = {chanceReal}% de chance de ser {BALAS.TRUE}
             <S.Span color={item.valorVerdadeiro}>{BALAS.TRUE}</S.Span>
             <S.Check
