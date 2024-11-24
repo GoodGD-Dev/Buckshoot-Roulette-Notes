@@ -73,9 +73,6 @@ const BulletList = () => {
               onChange={handleChange}
             />
           </S.Itens>
-          <p>
-            Selecionado: {newInput1}, {newInput2}
-          </p>
         </S.ListaItens>
       ))}
     </S.Lista>
