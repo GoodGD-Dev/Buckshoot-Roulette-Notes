@@ -6,12 +6,16 @@ import * as S from './style'
 const BulletList = () => {
   // Seleciona os itens diretamente do estado do Redux
   const itens = useSelector((state: RootState) => state.generateItems.itens)
-  const input1 = useSelector((state: RootState) => state.calcInputs.input1)
-  const input2 = useSelector((state: RootState) => state.calcInputs.input2)
+  const valorInput1 = useSelector(
+    (state: RootState) => state.calcInputs.valorInput1
+  )
+  const valorInput2 = useSelector(
+    (state: RootState) => state.calcInputs.valorInput2
+  )
 
   const bulletTotais = itens.length
-  const chanceReal = Math.round((input1 / bulletTotais) * 100)
-  const chanceFalsa = Math.round((input2 / bulletTotais) * 100)
+  const chanceReal = Math.round((valorInput1 / bulletTotais) * 100)
+  const chanceFalsa = Math.round((valorInput2 / bulletTotais) * 100)
 
   return (
     <S.Lista>
@@ -24,6 +28,9 @@ const BulletList = () => {
             <S.Span value={item.valorFalso}>{BALAS.FECHIM}</S.Span>
             <S.Check name={`bala${item.id}`} value={item.valorFalso} />
           </S.Itens>
+          <p>
+            Selecionado: {valorInput1}, {valorInput2}
+          </p>
         </S.ListaItens>
       ))}
     </S.Lista>

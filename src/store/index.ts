@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import generateItemsReducer from './reducers/generateItems'
 import calculaReducer from './reducers/calcInputs'
+import radioReducer from './reducers/ratios'
 
 const store = configureStore({
   reducer: {
     generateItems: generateItemsReducer,
-    calcInputs: calculaReducer
+    calcInputs: calculaReducer,
+    radios: radioReducer
   }
 })
 

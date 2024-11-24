@@ -4,12 +4,16 @@ type InputsState = {
   input1: number
   input2: number
   resultado: number
+  valorInput1: number
+  valorInput2: number
 }
 
 const initialState: InputsState = {
   input1: 0,
   input2: 0,
-  resultado: 0
+  resultado: 0,
+  valorInput1: 0,
+  valorInput2: 0
 }
 
 const inputsSlice = createSlice({
@@ -26,9 +30,15 @@ const inputsSlice = createSlice({
     },
     calcularResultado(state) {
       state.resultado = state.input1 + state.input2 // Ação de calcular a soma
+    },
+    salvarValores(state) {
+      // Quando o botão Start for clicado, salvamos os valores de input1 e input2 no estado do Redux
+      state.valorInput1 = state.input1
+      state.valorInput2 = state.input2
     }
   }
 })
 
-export const { setInput1, setInput2, calcularResultado } = inputsSlice.actions
+export const { setInput1, setInput2, calcularResultado, salvarValores } =
+  inputsSlice.actions
 export default inputsSlice.reducer

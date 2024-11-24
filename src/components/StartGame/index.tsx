@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store'
 import { generateItems } from '../../store/reducers/generateItems'
-import { setInput1, setInput2 } from '../../store/reducers/calcInputs'
+import {
+  setInput1,
+  setInput2,
+  salvarValores
+} from '../../store/reducers/calcInputs'
 import { BALAS } from '../../utils/enums'
 import * as S from './style'
 import BulletList from '../BulletsList'
@@ -12,6 +16,12 @@ const StartGame = () => {
   // Acessando os valores dos inputs diretamente do Redux
   const input1 = useSelector((state: RootState) => state.calcInputs.input1)
   const input2 = useSelector((state: RootState) => state.calcInputs.input2)
+  const valorInput1 = useSelector(
+    (state: RootState) => state.calcInputs.valorInput1
+  )
+  const valorInput2 = useSelector(
+    (state: RootState) => state.calcInputs.valorInput2
+  )
 
   // Função para calcular a soma
   function calculaInputs(n1: number, n2: number): number {
@@ -27,10 +37,15 @@ const StartGame = () => {
     dispatch(setInput2(Number(e.target.value))) // Atualiza o estado no Redux
   }
 
-  // Calcular a soma
-  const soma = calculaInputs(input1, input2)
-
+  // Função chamada ao clicar no botão Start
   const gerarItens = () => {
+    // Dispara a ação para salvar os valores no Redux
+    dispatch(salvarValores())
+
+    // Calcular a soma
+    const soma = calculaInputs(input1, input2)
+
+    // Dispara a ação de gerar itens com o valor da soma
     dispatch(generateItems(soma))
   }
 
